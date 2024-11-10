@@ -161,6 +161,41 @@ print(cool_lecturer1)
 print(best_student)
 print(best_student1)
 
+
+def grades_students(students_list, course):
+    overall_student_rating = 0
+    lectors = 0
+    for listener in students_list:
+        if course in listener.grades.keys():
+            average_student_score = 0
+            for grades in listener.grades[course]:
+                average_student_score += grades
+            overall_student_rating = average_student_score / len(listener.grades[course])
+            average_student_score += overall_student_rating
+            lectors += 1
+    if overall_student_rating == 0:
+        return f'Оценок по этому предмету нет'
+    else:
+        return f'{round(overall_student_rating / lectors, 1)}'
+
+
+def grades_lecturers(lecturer_list, course):
+    average_rating = 0
+    b = 0
+    for lecturer in lecturer_list:
+        if course in lecturer.course_grades.keys():
+            lecturer_average_rates = 0
+            for rate in lecturer.course_grades[course]:
+                lecturer_average_rates += rate
+            overall_lecturer_average_rates = lecturer_average_rates / len(lecturer.course_grades[course])
+            average_rating += overall_lecturer_average_rates
+            b += 1
+    if average_rating == 0:
+        return f'Оценок по этому предмету нет'
+    else:
+        return f'{round(average_rating / b, 1)}'
+
+
 if best_student < best_student1:
     print(
         f'Средняя оценка {best_student.name} {best_student.surname} меньше, чем средняя оценка {best_student1.name} {best_student1.surname}')
@@ -182,3 +217,6 @@ else:
     print(
         f'Средняя оценка {cool_lecturer.name} {cool_lecturer.surname}  равна средней оценке {cool_lecturer1.name} {cool_lecturer1.surname}')
 print()
+
+print(f'Средняя оценка студентов по курсу "Python": {grades_students(students_list, "Python")}')
+print(f'Средняя оценка лекторов по курсу "Python": {grades_lecturers(lecturer_list, "Python")}')
